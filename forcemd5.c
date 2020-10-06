@@ -38,3 +38,8 @@ int EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl) {
     interfere(ctx, type);
     return three(__func__, ctx, type, impl);
 }
+
+/* EVP_Digest() and EVP_DigestInit() are both implemented in terms of
+ * EVP_DigestInit_ex().  Cheating?  Kinda, but there's no other way to handle
+ * EVP_Digest() without reimplementation here becuse the context is
+ * function-internal. */
