@@ -1,4 +1,5 @@
-FLAGS = $(env CPPFLAGS) $(env CFLAGS) $(env LDFLAGS)
+OPTS = -Og -ggdb -shared -fPIC -Wall -Wextra
+UFLAGS = $(env CPPFLAGS) $(env CFLAGS) $(env LDFLAGS)
 
 forcemd5.so: forcemd5.c Makefile
-	clang -Og -ggdb -shared -fPIC -ldl $(FLAGS) -o forcemd5.so forcemd5.c
+	clang $(OPTS) -ldl $(FLAGS) -o forcemd5.so forcemd5.c
