@@ -21,6 +21,20 @@ static inline int three(const char *fname, const void *one, const void *two,
     return f((void *)one, (void *)two, (void *)three);
 }
 
+static void interfere(EVP_MD_CTX *ctx, const EVP_MD *type) {
+    char *e;
+
+    e = getenv("OPENSSL_FIPS_NON_MD5_ALLOW");
+    if (!e || e[0] == '\0' || e[0] == '0' || e[0] == 'n')
+        return;
+
+    if (type != EVP_md5() || !FIPS_mode())
+        return;
+
+    EVP_MD_CTX_set_flags(ctx, EVP_MD_CTX_FLAG_NON_FIPS_ALLOW);
+}
+
 int EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl) {
+    interfere(ctx, type);
     return three(__func__, ctx, type, impl);
 }
