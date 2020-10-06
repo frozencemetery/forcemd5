@@ -1,0 +1,19 @@
+{
+    "name": "CI",
+    "on": {
+        "push": null,
+        "pull_request": null,
+    },
+    "jobs": {
+        "linux": {
+            "runs-on": "ubuntu-latest",
+            "container": "centos:8",
+            "steps": [
+                { "uses": "actions/checkout@v2" },
+                { "run": "dnf -y install python3 openssl{,-devel} make gcc" },
+                { "run": "make" },
+                { "run": ".github/workflows/ci.py" },
+            ],
+        },
+    }
+}
