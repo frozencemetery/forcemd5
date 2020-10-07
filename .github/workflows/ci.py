@@ -9,15 +9,15 @@ def run(c: str, env: Optional[Dict[str, str]] = None,
     proc = subprocess.run(c, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                           shell=True, input=b"hi", env=env)
     if proc.returncode == 0 and not fail:
-        print(f"[expected pass] `{c}` with env {e}")
+        print(f"[expected pass] `{c}` with env {env}")
     elif proc.returncode != 0 and fail:
-        print(f"[expected fail] `{c}` with env {e}")
+        print(f"[expected fail] `{c}` with env {env}")
     elif proc.returncode == 0 and fail:
-        print(f"[unexpected pass] `{c}` with env {e}")
+        print(f"[unexpected pass] `{c}` with env {env}")
         print(f"Output:\n{proc.stdout.decode('utf-8')}")
         exit(-1)
     else:
-        print(f"[unexpected fail] `{c}` with env {e}")
+        print(f"[unexpected fail] `{c}` with env {env}")
         print(f"Output:\n{proc.stdout.decode('utf-8')}")
         exit(-1)
 
