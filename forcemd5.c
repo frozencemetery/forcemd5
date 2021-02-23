@@ -10,8 +10,8 @@
 
 #include <openssl/evp.h>
 
-static inline int three(const char *fname, const void *one, const void *two,
-                        const void *three) {
+static inline int f3(const char *fname, const void *one, const void *two,
+                     const void *three) {
     int (*f)(void *, void *, void *);
 
     f = dlsym(RTLD_NEXT, fname);
@@ -36,7 +36,7 @@ static void interfere(EVP_MD_CTX *ctx, const EVP_MD *type) {
 
 int EVP_DigestInit_ex(EVP_MD_CTX *ctx, const EVP_MD *type, ENGINE *impl) {
     interfere(ctx, type);
-    return three(__func__, ctx, type, impl);
+    return f3(__func__, ctx, type, impl);
 }
 
 /* EVP_Digest() and EVP_DigestInit() are both implemented in terms of
